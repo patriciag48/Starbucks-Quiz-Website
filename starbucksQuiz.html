@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Starbucks Quiz Game</title>
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- import the webpage's javascript file -->
+    <!-- <script src="/script.js" defer></script> -->
+    
+  </head>  
+  <body>
+    
+    <div id = "title">How many Starbucks drinks can you name in a minute?</div><br>
+    <div id = "desc">Starbucks serves many drinks throughout the year but only a few stay on the regular menu. Try this quiz to see how many of Starbucks Singapore's regular menu drinks you can name in a minute!</div><br>
+    <div id = "Play">
+      <button id = "startButton" onclick = "startQuiz()">Play Quiz</button><br><br>
+    </div>
+    <div id = "quiz">
+      <div id = "quizActions">
+    		<button id = "giveUpButton" onclick = "endGame()">Give Up?</button>
+      	<button id = "replayButton" onclick = "replay()">↻</button>
+        <button id = "playPauseButton" onclick = "pause()">
+          <div id = "pause">||</div>
+          <div id = "play">▶</div>
+        </button>
+      	<div id = "time">1:00</div>
+    	</div>
+      <input type="text" id="answerField" name="answerField" onkeyup = "rightAnswer()">
+    </div>
+    <div id = "quizEnd">
+      <div id = "win">YOU WIN!</div>
+      <div id = "timeUp">TIME'S UP!</div>
+      <div id = "userScore"></div>
+      <div id = "outOf">/ 30</div>
+      <button id = "addToLeaderboard" onclick = "addUser()">Add yourself to leaderboard</button>
+      <button id = "updateLeaderboard" onclick = "updateUser()">Update yourself on leaderboard</button>
+    </div>
+    <div id = "userAdd">
+      <button id = "closeButtonAdd" onclick = "closeAddUser()">×</button>
+      <input type = "text" placeholder = "Username" id = "usernameField"><br>
+      <input type = "password" placeholder = "Password" id = "passwordField"><br>
+      <input type = "text" placeholder = "Full Name" id = "nameField"><br>
+      <button id = "addUserButton" onclick = "writeData()">Add User</button>
+    </div>
+    <div id = "userUpdate">
+      <button id = "closeButtonUpdate" onclick = "closeUpdateUser()">×</button>
+      <input type = "text" placeholder = "Username" id = "usernameField2"><br>
+      <input type = "password" placeholder = "Password" id = "passwordField2"><br>
+      <button id = "updateUserButton" onclick = "updateData()">Update User</button>
+    </div>
+    <div id = "leaderboard">
+      <div id = "leaderboardTitle">Leaderboard</div><br>
+      <div id = "nameTitle">Name</div>
+      <div id = "usernameTitle">Username</div>
+      <div id = "scoreTitle">Score</div><br><br>
+      <div id = "nameLeaderboard"></div>
+      <div id = "usernameLeaderboard"></div>
+      <div id = "scoreLeaderboard"></div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "WHITE CHOCOLATE MOCHA">
+        <img src = "https://globalassets.starbucks.com/assets/4b621e63f6ba4c19a8618055284eca8d.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">White Chocolate Mocha</div>
+      </div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "VANILLA LATTE">
+        <img src = "https://globalassets.starbucks.com/assets/5cd1a64f00ed4f7ba5923cfa73a0e323.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Vanilla Latte</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CARAMEL MACCHIATO">
+        <img src = "https://globalassets.starbucks.com/assets/58db701349cb48738069e8c912e2b3ac.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Caramel Macchiato</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CAFFE MOCHA">
+        <img src = "https://globalassets.starbucks.com/assets/f4ec500b34624242b15c2d29e53f3c48.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Caffe Mocha</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CAFFE LATTE">
+        <img src = "https://globalassets.starbucks.com/assets/b635f407bbcd49e7b8dd9119ce33f76e.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Caffe Latte</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "AMERICANO">
+        <img src = "https://globalassets.starbucks.com/assets/84ede138768e42ebb2e0366c2f09960a.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Americano</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/5c515339667943ce84dc56effdf5fc1b.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Cappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ESPRESSO">
+        <img src = "https://globalassets.starbucks.com/assets/ec519dd5642c41629194192cce582135.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Espresso</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "DARK MOCHA FRAPPUCCINO">
+        <img src = "https://cdn.glitch.com/537b41f6-70b5-4a18-82d0-0e5335255963%2FScreenshot%202020-05-26%20at%203.21.09%20AM.png?v=1590434491431" width = "300" height = "500">
+        <div class = "answer">Dark Mocha Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CARAMEL MACCHIATO FRAPPUCCINO">
+        <img src = "https://cdn.glitch.com/537b41f6-70b5-4a18-82d0-0e5335255963%2FScreenshot%202020-05-26%20at%203.28.36%20AM.png?v=1590434935601" width = "300" height = "500">
+        <div class = "answer">Caramel Macchiato Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "VANILLA CREME FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/b68fa7003557464a8abfaf3e04e2704b.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Vanilla Creme Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "GREEN TEA FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/4de2afd14f3343b6a140c904e1b4a63a.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Green Tea Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CHOCOLATE CHIP FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/41daf68bcbf84ee68b7d23e0b820127f.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Chocolate Chip Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "WHITE CHOCOLATE MOCHA FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/850f847876454a22861e4070170bdb0c.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">White Chocolate Mocha Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "MOCHA FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/fd4d97f22e8f476b874352258a3f0672.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Mocha Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "JAVA CHIP FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/87ab7a1c8b7b492cbc1d5c5d44e1007b.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Java Chip Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ESPRESSO FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/e40fe41b68ec42c0a06af692cc4b1c12.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Espresso Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CARAMEL FRAPPUCCINO">
+        <img src = "https://globalassets.starbucks.com/assets/6ab7d70c4fff435faf090a2f1a6f30d5.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Caramel Frappuccino</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "BREWED COFFEE">
+        <img src = "https://cdn.glitch.com/537b41f6-70b5-4a18-82d0-0e5335255963%2FBrewed%20Coffee.png?v=1590432815895" width = "300" height = "500">
+        <div class = "answer">Brewed Coffee</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "VANILLA SWEET CREAM COLD BREW">
+        <img src = "https://globalassets.starbucks.com/assets/3ee242d417904e7aa8f859fc1b07873c.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Vanilla Sweet Cream Cold Brew</div>
+      </div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "COLD BREW">
+        <img src = "https://cdn.glitch.com/537b41f6-70b5-4a18-82d0-0e5335255963%2FScreenshot%202020-05-26%20at%203.03.43%20AM.png?v=1590433452065" width = "300" height = "500">
+        <div class = "answer">Cold Brew</div>
+      </div>
+    </div>
+    <div class = "answerBox">
+      <div class = "answerReveal" id = "HOT CHOCOLATE">
+        <img src = "https://globalassets.starbucks.com/assets/d39650cf28d44aa283a0f311581e3491.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Hot Chocolate</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "GREEN TEA LATTE">
+        <img src = "https://globalassets.starbucks.com/assets/21f5c9e19d614c7481c1a964e81d1bbc.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Green Tea Latte</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "CHAI TEA LATTE">
+        <img src = "https://globalassets.starbucks.com/assets/7b51b01b4a394a829ff9df4ef9f3be3c.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Chai Tea Latte</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "EARL GREY TEA LATTE">
+        <img src = "https://globalassets.starbucks.com/assets/180da7ecb6fa4d2686babe5619fa7b84.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Earl Grey Tea Latte</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ICED SHAKEN GREEN TEA LEMONADE">
+        <img src = "https://globalassets.starbucks.com/assets/84d27419b3454046bd02683c02fa7736.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Iced Shaken Green Tea Lemonade</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ICED SHAKEN BLACK TEA LEMONADE">
+        <img src = "https://globalassets.starbucks.com/assets/818612edc424442d956c81343f6a00d0.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Iced Shaken Black Tea Lemonade</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ICED SHAKEN HIBISCUS TEA LEMONADE">
+        <img src = "https://globalassets.starbucks.com/assets/569e49c5042e45eb8b16dc17aab2d482.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Iced Shaken Hibiscus Tea Lemonade</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "MINT BLEND TEA">
+        <img src = "https://globalassets.starbucks.com/assets/6a59c09bb55c42f8a6a970e73c22caeb.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">Mint Blend Tea</div>
+      </div>
+    </div>
+    <div class = "answerBox" id>
+      <div class = "answerReveal" id = "ENGLISH BREAKFAST TEA">
+        <img src = "https://globalassets.starbucks.com/assets/e3554d07d1394ee79cfad80a383ba163.jpg?impolicy=1by1_wide_1242" width = "300" height = "500">
+        <div class = "answer">English Breakfast Tea</div>
+      </div>
+    </div>
+    
+       <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-database.js"></script>
+    
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-analytics.js"></script>
+    
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyC2qyJtS8m6uFsTkj3RlckFBNkq3M7qlrs",
+        authDomain: "pat-s-starbucks-quiz.firebaseapp.com",
+        databaseURL: "https://pat-s-starbucks-quiz.firebaseio.com",
+        projectId: "pat-s-starbucks-quiz",
+        storageBucket: "pat-s-starbucks-quiz.appspot.com",
+        messagingSenderId: "971852287438",
+        appId: "1:971852287438:web:24022e7c080abd04c12f9f",
+        measurementId: "G-YQR1MK5NV7"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      
+      function writeData(){
+        var userUsername = document.getElementById("usernameField").value
+        var userPassword = document.getElementById("passwordField").value
+        var userName = document.getElementById("nameField").value
+        if(userUsername.trim().length == 0 || userPassword.trim().length == 0 || userName.trim().length == 0){
+          alert("Username, Password, or Name is invalid. Please try again.")
+          return
+        }
+        var ref = firebase.database().ref("users/" + userUsername)
+        ref.once("value")
+          .then(function(snapshot) {
+            if(snapshot.exists()){
+              alert("Username is already taken. Please try a different one.")
+            }
+            else{
+              firebase.database().ref("users/" + userUsername).set({
+                username: userUsername,
+                password: userPassword,
+                name: userName,
+                score: parseInt(document.getElementById("userScore").innerHTML),
+                missed: 30 - parseInt(document.getElementById("userScore").innerHTML)
+              });
+              document.getElementById("userAdd").style.display = "none"
+              document.getElementById("leaderboard").style.display = "block"
+              document.getElementById("nameTitle").style.display = "inline-block"
+              document.getElementById("usernameTitle").style.display = "inline-block"
+              document.getElementById("scoreTitle").style.display = "inline-block"
+              var names = ""
+              var usernames = ""
+              var scores = ""
+              firebase.database().ref("users").orderByChild("missed").once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                  var name = childSnapshot.val().name
+                  var username = childSnapshot.val().username
+                  var score = childSnapshot.val().score
+                  names += name + "<br><br>"
+                  usernames += username + "<br><br>"
+                  scores += score.toString() + "<br><br>"
+                });
+                document.getElementById("nameLeaderboard").innerHTML = names
+                document.getElementById("usernameLeaderboard").innerHTML = usernames
+                document.getElementById("scoreLeaderboard").innerHTML = scores
+                document.getElementById("nameLeaderboard").style.display = "inline-block"
+                document.getElementById("usernameLeaderboard").style.display = "inline-block"
+                document.getElementById("scoreLeaderboard").style.display = "inline-block"
+              });
+            }
+        });
+      }
+      
+      function updateData(){
+        var userUsername = document.getElementById("usernameField2").value
+        var userPassword = document.getElementById("passwordField2").value
+        if(userUsername.trim().length == 0 || userPassword.trim().length == 0){
+          alert("Username or Password is invalid. Please try again.")
+          return
+        }
+        var ref = firebase.database().ref("users/" + userUsername)
+        ref.once("value")
+          .then(function(snapshot) {
+            if(!snapshot.exists()){
+              alert("Username does not exist. Please add yourself as a new user or try again.")
+            }
+            else if(snapshot.val().password === userPassword.toString()){
+              firebase.database().ref("users/" + userUsername).update({score: parseInt(document.getElementById("userScore").innerHTML), missed: 30 - parseInt(document.getElementById("userScore").innerHTML)})
+              document.getElementById("userUpdate").style.display = "none"
+              document.getElementById("leaderboard").style.display = "block"
+              document.getElementById("nameTitle").style.display = "inline-block"
+              document.getElementById("usernameTitle").style.display = "inline-block"
+              document.getElementById("scoreTitle").style.display = "inline-block"
+              var names = ""
+              var usernames = ""
+              var scores = ""
+              firebase.database().ref("users").orderByChild("missed").once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                  var name = childSnapshot.val().name
+                  var username = childSnapshot.val().username
+                  var score = childSnapshot.val().score
+                  names += name + "<br><br>"
+                  usernames += username + "<br><br>"
+                  scores += score.toString() + "<br><br>"
+                });
+                document.getElementById("nameLeaderboard").innerHTML = names
+                document.getElementById("usernameLeaderboard").innerHTML = usernames
+                document.getElementById("scoreLeaderboard").innerHTML = scores
+                document.getElementById("nameLeaderboard").style.display = "inline-block"
+                document.getElementById("usernameLeaderboard").style.display = "inline-block"
+                document.getElementById("scoreLeaderboard").style.display = "inline-block"
+              });
+            }
+            else{
+              alert("Wrong password. Try again.")
+            }
+        });
+      }
+      
+    </script>
+
+    <script defer src="script.js"></script>
+    
+  </body>
+</html>
